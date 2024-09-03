@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask import request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -6,13 +7,13 @@ app = Flask(__name__)
 def home():
   return render_template('index.html', me={'name': 'Chima', 'age': 24})
 
-@app.route('/feature-performances')
-def home():
-  return render_template('index.html', me={'name': 'Chima', 'age': 24})
+# @app.route('/feature-performances')
+# def home():
+#   return render_template('index.html', me={'name': 'Chima', 'age': 24})
 
-@app.route('/predict', methods=['POST'])
-def home():
-  return render_template('index.html', me={'name': 'Chima', 'age': 24})
+# @app.route('/predict', methods=['POST'])
+# def home():
+#   return render_template('index.html', me={'name': 'Chima', 'age': 24})
 
 
 app.run(debug=True)

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <title>Customer Churn Prediction</title>
+    <script src="/src/dist/main.js" defer></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            nunito: ['Nunito', 'sans-serif'],
+            'josefin-sans': ['Josefin Sans', 'serif'],
+          },
+          container: { center: true },
+          extend: {
+            colors: {
+              pry: '#FF704D',
+              prydark: '#E24923',
+              textdefault: 'rgba(255, 255, 255, .75)',
+              bgdefault: 'rgba(255, 255, 255, .15)',
+              success: '#1AAB8E',
+              fail: '#EC6774',
+            },
+            gridTemplateColumns: {
+              responsive: 'repeat(auto-fit, minmax(12rem, 1fr))',
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <style type="text/tailwindcss">
+    input,
+    select,
+    textarea {
+      outline: none;
+      font: inherit;
+    }
+    .cmp-textfield:not(:placeholder-shown) + label {
+      bottom: calc(100% + 15px);
+      left: 0;
+      @apply text-pry opacity-100;
+    }
+    .cmp-textfield:not(:focus) + label {
+      @apply text-inherit;
+    }
+
+    @layer utilities {
+      .u-navlink-active {
+        @apply text-pry font-[600] border-r border-r-[3px] border-r-pry;
+      }
+      .u-flex-center {
+        @apply flex items-center justify-center;
+      }
+
+      .scrollbar-thin::-webkit-scrollbar {
+        @apply w-3;
+      }
+      .scrollbar-rounded::-webkit-scrollbar-thumb {
+        @apply rounded-full;
+      }
+      .scrollbar-gray::-webkit-scrollbar-thumb {
+        @apply bg-white/20;
+      }
+      .scrollbar-track-rounded::-webkit-scrollbar-track {
+        @apply rounded-full;
+      }
+    }
+
+    @layer components {
+      .cmp-textfield {
+        @apply max-w-[215px] bg-white/15 p-3 px-4 rounded-md focus:bg-transparent border border-transparent focus:border focus:border-pry;
+      }
+      .cmp-check
+        > input[type='checkbox']:checked
+        + label
+        > div
+        > div:where(.bg-black) {
+        transform: translateX(60%);
+      }
+      .cmp-check > input[type='checkbox']:not(:checked) + label > div {
+        @apply bg-[#fff]/[.3];
+      }
+
+      .cmp-btn {
+        @apply u-flex-center px-7 py-3 rounded-full text-center transition-colors duration-300;
+      }
+      .cmp-btn-long {
+        @apply min-w-[15rem];
+      }
+      .cmp-btn-pry {
+        @apply cmp-btn bg-pry text-black font-[700] hover:bg-prydark;
+      }
+      .cmp-btn-sm {
+        @apply px-4 py-3 text-[1.5rem];
+      }
+    }
+  </style>
+
+  <body
+    class="grid min-h-screen max-h-screen bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/75 overflow-hidden"
+  >
+    <video
+      src="static/man-focusing-on-analysis.mp4"
+      class="block absolute inset-0 h-screen w-screen object-cover"
+      preload
+      loop
+      muted
+    ></video>
+    <!-- autoplay -->
+
+    <div
+      class="container xl:max-w-[1000px] grid grid-cols-[14%_1fr] grid-rows-[auto_1fr] gap-8 gap-x-16 relative z-[5] text-textdefault pt-5"
+    >
+      <header class="col-span-full">
+        <h1 class="font-josefin-sans text-2xl text-right text-white">
+          Customer <span class="text-pry">Churn</span> Prediction
+        </h1>
+      </header>
+
+      <aside class="h-full borde">
+        <ul
+          class="h-[50%] flex flex-col gap-7 border-r-[2.5px] border-white/15 py-7"
+        >
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 u-navlink-active"
+          >
+            <a href="">About Model</a>
+          </li>
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="">Predict Churn</a>
+          </li>
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="">Model features</a>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- <main class="h-full flex flex-col gap-7 leading-8">
+        <h2 class="text-3xl text-white/90">Model features</h2>
+      </main> -->
+
+      <!-- <main class="h-full flex flex-col gap-7 leading-8">
+        <h1 class="text-4xl text-white/90">About Model</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut bibendum.
+          Placerat euismod blandit sed sed ut. Varius auctor scelerisque sem
+          neque sagittis imperdiet urna habitant sagittis. Sed a facilisis
+          tincidunt fringilla eu iaculis lectus posuere metus.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut bibendum.
+          Placerat euismod blandit sed sed ut. Varius auctor scelerisque sem
+          neque sagittis imperdiet urna habitant sagittis. Sed a facilisis
+          tincidunt fringilla eu iaculis lectus posuere metus.
+        </p>
+        <a href="/predict" class="self-start cmp-btn cmp-btn-pry">Test model</a>
+      </main> -->
+
+      <main class="h-full flex flex-col gap-4">
+        <h2 class="text-3xl text-white/90">Predict</h2>
+        <form
+          action=""
+          class="basis-[60%] grid grid-cols-responsive items-start gap-8 py-7 overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded"
+        >
+          <div class="relative max-h-max">
+            <input
+              type="number"
+              min="0"
+              id="key"
+              class="cmp-textfield"
+              placeholder="Tenure"
+            />
+            <label
+              for="key"
+              class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+              >Tenure</label
+            >
+          </div>
+
+          <div class="relative max-h-max">
+            <input
+              type="number"
+              min="0"
+              id="key"
+              class="cmp-textfield"
+              placeholder="Tenure"
+            />
+            <label
+              for="key"
+              class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+              >Tenure</label
+            >
+          </div>
+
+          <div class="relative max-h-max">
+            <input
+              type="number"
+              min="0"
+              id="key"
+              class="cmp-textfield"
+              placeholder="Tenure"
+            />
+            <label
+              for="key"
+              class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+              >Tenure</label
+            >
+          </div>
+
+          <div class="cmp-check relative -translate-y-[7px]">
+            <input type="checkbox" id="check" class="absolute opacity-0" />
+            <label
+              for="check"
+              class="relative flex flex-col gap-2 cursor-pointer"
+            >
+              <span>Has Device Protection</span>
+              <div class="w-28 h-10 bg-pry rounded-full relative">
+                <div
+                  class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                ></div>
+              </div>
+            </label>
+          </div>
+
+          <div class="relative max-h-max">
+            <input
+              type="number"
+              min="0"
+              id="key"
+              class="cmp-textfield"
+              placeholder="Tenure"
+            />
+            <label
+              for="key"
+              class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+              >Tenure</label
+            >
+          </div>
+
+          <div class="cmp-check relative -translate-y-[7px]">
+            <input type="checkbox" id="1" class="absolute opacity-0" />
+            <label for="1" class="relative flex flex-col gap-2 cursor-pointer">
+              <span>Has Device Protection</span>
+              <div class="w-28 h-10 bg-pry rounded-full relative">
+                <div
+                  class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                ></div>
+              </div>
+            </label>
+          </div>
+
+          <div class="relative max-h-max">
+            <input
+              type="number"
+              min="0"
+              id="key"
+              class="cmp-textfield"
+              placeholder="Tenure"
+            />
+            <label
+              for="key"
+              class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+              >Tenure</label
+            >
+          </div>
+
+          <div class="cmp-check relative -translate-y-[7px]">
+            <input type="checkbox" id="checked" class="absolute opacity-0" />
+            <label
+              for="checked"
+              class="relative flex flex-col gap-2 cursor-pointer"
+            >
+              <span>Has Device Protection</span>
+              <div class="w-28 h-10 bg-pry rounded-full relative">
+                <div
+                  class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                ></div>
+              </div>
+            </label>
+          </div>
+
+          <div class="cmp-check relative -translate-y-[7px]">
+            <input type="checkbox" id="checkedd" class="absolute opacity-0" />
+            <label
+              for="check"
+              class="relative flex flex-col gap-2 cursor-pointer"
+            >
+              <span class="">Has Device Protection</span>
+              <div class="w-28 h-10 bg-pry rounded-full relative">
+                <div
+                  class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                ></div>
+              </div>
+            </label>
+          </div>
+
+          <div class="flex flex-col gap-2 relative">
+            <label for="">Internet Service</label>
+            <select
+              name=""
+              id=""
+              class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
+            >
+              <option value="" class="bg-black text-textdefault hover:bg-white">
+                Please select a value
+              </option>
+              <option
+                value="DHL"
+                class="bg-black text-textdefault hover:bg-white"
+              >
+                DHL
+              </option>
+              <option
+                value="FIBRE_OPTIC"
+                class="bg-black text-textdefault hover:bg-white"
+              >
+                Fibre Optic
+              </option>
+            </select>
+          </div>
+
+          <div class="cmp-check relative -translate-y-[7px]">
+            <input type="checkbox" id="check" class="absolute opacity-0" />
+            <label
+              for="check"
+              class="relative flex flex-col gap-2 cursor-pointer"
+            >
+              <span>Has Device Protection</span>
+              <div class="w-28 h-10 bg-pry rounded-full relative">
+                <div
+                  class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                ></div>
+              </div>
+            </label>
+          </div>
+
+          <div class="flex flex-col gap-2 relative">
+            <label for="" class="absolutee -top-[30px] left-0"
+              >Internet Service</label
+            >
+            <select
+              name=""
+              id=""
+              class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
+            >
+              <option value="" class="bg-black text-textdefault hover:bg-white">
+                Please select a value
+              </option>
+              <option
+                value="DHL"
+                class="bg-black text-textdefault hover:bg-white"
+              >
+                DHL
+              </option>
+              <option
+                value="FIBRE_OPTIC"
+                class="bg-black text-textdefault hover:bg-white"
+              >
+                Fibre Optic
+              </option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-2 relative">
+            <label for="" class="absolutee -top-[30px] left-0"
+              >Internet Service</label
+            >
+            <select
+              name=""
+              id=""
+              class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
+            >
+              <option value="" class="bg-black text-textdefault hover:bg-white">
+                Please select a value
+              </option>
+              <option
+                value="DHL"
+                class="bg-black text-textdefault hover:bg-white"
+              >
+                DHL
+              </option>
+              <option
+                value="FIBRE_OPTIC"
+                class="bg-black text-textdefault hover:bg-white"
+              >
+                Fibre Optic
+              </option>
+            </select>
+          </div>
+        </form>
+
+        <button class="self-start mx-auto cmp-btn cmp-btn-pry cmp-btn-long">
+          Predict
+        </button>
+      </main>
+    </div>
+  </body>
+</html>
+<!-- before:absolute before:w-1 before:h-1 top-[50%] -translate-y-[50%] before:rounded-full before:bg-pry -->
