@@ -14,21 +14,16 @@
     <title>Customer Churn Prediction</title>
 
     <script
-      src="{{ url_for('static', filename='/src/dist/main.js') }}"
+      src="{{ url_for('static', filename='/src/dist/entry.js') }}"
       type="module"
     ></script>
-
-    <!-- <script
-      src="{{ url_for('static', filename='/src/dist/layout/Header.js') }}"
-      type="module"
-    ></script> -->
 
     <script>
       tailwind.config = {
         theme: {
           fontFamily: {
             nunito: ['Nunito', 'sans-serif'],
-            'josefin-sans': ['Josefin Sans', 'serif'],
+            'josefin-sans': ['Josefin Sans', 'serif']
           },
           container: { center: true },
           extend: {
@@ -38,13 +33,13 @@
               textdefault: 'rgba(255, 255, 255, .75)',
               bgdefault: 'rgba(255, 255, 255, .15)',
               success: '#1AAB8E',
-              fail: '#EC6774',
+              fail: '#EC6774'
             },
             gridTemplateColumns: {
-              responsive: 'repeat(auto-fit, minmax(12rem, 1fr))',
-            },
-          },
-        },
+              responsive: 'repeat(auto-fit, minmax(12rem, 1fr))'
+            }
+          }
+        }
       };
     </script>
   </head>
@@ -85,6 +80,24 @@
       .scrollbar-track-rounded::-webkit-scrollbar-track {
         @apply rounded-full;
       }
+
+      .pg-zoom-in {
+        @apply scale-100 opacity-100 z-[3];
+      }
+      .pg-slide-from-right {
+        @apply translate-x-0 opacity-100 z-[3];
+      }
+      .pg-zoom-out {
+        @apply scale-50 opacity-0;
+      }
+      .pg-slide-out-right {
+        @apply translate-x-[400px] opacity-0;
+      }
+
+      /* .screen-active {
+        @apply 
+      }
+      .screen-active */
     }
 
     @layer components {
@@ -118,12 +131,13 @@
   </style>
 
   <body
-    class="grid min-h-screen max-h-screen bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/75 overflow-hidde"
+    class="grid min-h-screen max-h-screen bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/75 overflow-hidden"
   >
     <video
-      src="static/man-focusing-on-analysis.mp4"
+      src="{{ url_for('static', filename='/man-focusing-on-analysis.mp4' )}}"
       class="block absolute inset-0 h-screen w-screen object-cover"
       preload
+      autoplay
       loop
       muted
     ></video>
@@ -138,45 +152,311 @@
         </h1>
       </header>
 
-      <aside class="h-full" id="nav"></aside>
+      <aside class="h-full borde">
+        <ul
+          class="h-[50%] flex flex-col gap-7 border-r-[2.5px] border-white/15 py-7"
+        >
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200"
+          >
+            <a href="#about">About Model</a>
+          </li>
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="#predict">Predict Churn</a>
+          </li>
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="#features">Model features</a>
+          </li>
+        </ul>
+      </aside>
 
-      <main
-        class="h-full flex flex-col gap-7 leading-8 border"
-        id="#main"
-      ></main>
+      <main class="h-full">
+        <div
+          class="h-full max-h-full flex flex-col gap-7 leading-8"
+          id="features"
+        >
+          <h2 class="text-3xl text-white/90">Model features</h2>
+          <p>
+            This is the model features page... consectetur. Adipiscing a enim ut
+            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
+            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
+            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
+          </p>
+        </div>
 
-      <!-- <main class="h-full flex flex-col gap-7 leading-8">
-        <h2 class="text-3xl text-white/90">Model features</h2>
-      </main> -->
+        <div class="h-full max-h-full flex flex-col gap-7 leading-8" id="about">
+          <h1 class="text-4xl text-white/90">About Model</h1>
+          <p>
+            Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut
+            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
+            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
+            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut
+            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
+            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
+            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
+          </p>
+          <a href="#predict" class="self-start cmp-btn cmp-btn-pry"
+            >Test model</a
+          >
+        </div>
 
-      <!-- <main class="h-full flex flex-col gap-7 leading-8">
-        <h1 class="text-4xl text-white/90">About Model</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut bibendum.
-          Placerat euismod blandit sed sed ut. Varius auctor scelerisque sem
-          neque sagittis imperdiet urna habitant sagittis. Sed a facilisis
-          tincidunt fringilla eu iaculis lectus posuere metus.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut bibendum.
-          Placerat euismod blandit sed sed ut. Varius auctor scelerisque sem
-          neque sagittis imperdiet urna habitant sagittis. Sed a facilisis
-          tincidunt fringilla eu iaculis lectus posuere metus.
-        </p>
-        <a href="/predict" class="self-start cmp-btn cmp-btn-pry">Test model</a>
-      </main> -->
+        <div class="h-full max-h-full flex flex-col gap-4" id="predict">
+          <h2 class="text-3xl text-white/90">Predict</h2>
+          <form
+            action=""
+            class="basis-[60%] grid grid-cols-responsive items-start gap-8 py-7 overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded"
+          >
+            <div class="relative max-h-max">
+              <input
+                type="number"
+                min="0"
+                id="key"
+                class="cmp-textfield"
+                placeholder="Tenure"
+              />
+              <label
+                for="key"
+                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+                >Tenure</label
+              >
+            </div>
 
-      <!-- <main class="h-full flex flex-col gap-4">
-        <h2 class="text-3xl text-white/90">Predict</h2>
-        <form
-          action=""
-          class="basis-[60%] grid grid-cols-responsive items-start gap-8 py-7 overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded"
-        ></form>
+            <div class="relative max-h-max">
+              <input
+                type="number"
+                min="0"
+                id="key"
+                class="cmp-textfield"
+                placeholder="Tenure"
+              />
+              <label
+                for="key"
+                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+                >Tenure</label
+              >
+            </div>
 
-        <button class="self-start mx-auto cmp-btn cmp-btn-pry cmp-btn-long">
-          Predict
-        </button>
-      </main> -->
+            <div class="relative max-h-max">
+              <input
+                type="number"
+                min="0"
+                id="key"
+                class="cmp-textfield"
+                placeholder="Tenure"
+              />
+              <label
+                for="key"
+                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+                >Tenure</label
+              >
+            </div>
+
+            <div class="cmp-check relative -translate-y-[7px]">
+              <input type="checkbox" id="check" class="absolute opacity-0" />
+              <label
+                for="check"
+                class="relative flex flex-col gap-2 cursor-pointer"
+              >
+                <span>Has Device Protection</span>
+                <div class="w-28 h-10 bg-pry rounded-full relative">
+                  <div
+                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                  ></div>
+                </div>
+              </label>
+            </div>
+
+            <div class="relative max-h-max">
+              <input
+                type="number"
+                min="0"
+                id="key"
+                class="cmp-textfield"
+                placeholder="Tenure"
+              />
+              <label
+                for="key"
+                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+                >Tenure</label
+              >
+            </div>
+
+            <div class="cmp-check relative -translate-y-[7px]">
+              <input type="checkbox" id="1" class="absolute opacity-0" />
+              <label
+                for="1"
+                class="relative flex flex-col gap-2 cursor-pointer"
+              >
+                <span>Has Device Protection</span>
+                <div class="w-28 h-10 bg-pry rounded-full relative">
+                  <div
+                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                  ></div>
+                </div>
+              </label>
+            </div>
+
+            <div class="relative max-h-max">
+              <input
+                type="number"
+                min="0"
+                id="key"
+                class="cmp-textfield"
+                placeholder="Tenure"
+              />
+              <label
+                for="key"
+                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
+                >Tenure</label
+              >
+            </div>
+
+            <div class="cmp-check relative -translate-y-[7px]">
+              <input type="checkbox" id="checked" class="absolute opacity-0" />
+              <label
+                for="checked"
+                class="relative flex flex-col gap-2 cursor-pointer"
+              >
+                <span>Has Device Protection</span>
+                <div class="w-28 h-10 bg-pry rounded-full relative">
+                  <div
+                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                  ></div>
+                </div>
+              </label>
+            </div>
+
+            <div class="cmp-check relative -translate-y-[7px]">
+              <input type="checkbox" id="checkedd" class="absolute opacity-0" />
+              <label
+                for="check"
+                class="relative flex flex-col gap-2 cursor-pointer"
+              >
+                <span class="">Has Device Protection</span>
+                <div class="w-28 h-10 bg-pry rounded-full relative">
+                  <div
+                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                  ></div>
+                </div>
+              </label>
+            </div>
+
+            <div class="flex flex-col gap-2 relative">
+              <label for="">Internet Service</label>
+              <select
+                name=""
+                id=""
+                class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
+              >
+                <option
+                  value=""
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  Please select a value
+                </option>
+                <option
+                  value="DHL"
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  DHL
+                </option>
+                <option
+                  value="FIBRE_OPTIC"
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  Fibre Optic
+                </option>
+              </select>
+            </div>
+
+            <div class="cmp-check relative -translate-y-[7px]">
+              <input type="checkbox" id="check" class="absolute opacity-0" />
+              <label
+                for="check"
+                class="relative flex flex-col gap-2 cursor-pointer"
+              >
+                <span>Has Device Protection</span>
+                <div class="w-28 h-10 bg-pry rounded-full relative">
+                  <div
+                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
+                  ></div>
+                </div>
+              </label>
+            </div>
+
+            <div class="flex flex-col gap-2 relative">
+              <label for="" class="absolutee -top-[30px] left-0"
+                >Internet Service</label
+              >
+              <select
+                name=""
+                id=""
+                class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
+              >
+                <option
+                  value=""
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  Please select a value
+                </option>
+                <option
+                  value="DHL"
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  DHL
+                </option>
+                <option
+                  value="FIBRE_OPTIC"
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  Fibre Optic
+                </option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2 relative">
+              <label for="" class="absolutee -top-[30px] left-0"
+                >Internet Service</label
+              >
+              <select
+                name=""
+                id=""
+                class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
+              >
+                <option
+                  value=""
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  Please select a value
+                </option>
+                <option
+                  value="DHL"
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  DHL
+                </option>
+                <option
+                  value="FIBRE_OPTIC"
+                  class="bg-black text-textdefault hover:bg-white"
+                >
+                  Fibre Optic
+                </option>
+              </select>
+            </div>
+          </form>
+
+          <button class="self-start mx-auto cmp-btn cmp-btn-pry cmp-btn-long">
+            Predict
+          </button>
+        </div>
+      </main>
     </div>
   </body>
 </html>

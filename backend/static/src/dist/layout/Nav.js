@@ -31,3 +31,4 @@ var Nav = /** @class */ (function () {
 }());
 export { Nav };
 export default new Nav();
+//# sourceMappingURL=Nav.js.map
