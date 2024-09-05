@@ -1,38 +1,39 @@
-"use strict";
-var navlinks = (document.querySelectorAll('aside > ul a'));
-var screens = document.querySelectorAll('main > *');
-// const pageHashes = {'#about': , '#predict', '#features'};
-var handleLinkChange = function () {
-    navlinks.forEach(function (link) {
-        var isCurrentHash = link.href.split('/').slice(-1).pop() === location.hash;
+import './pages/Predict.js';
+const screens = document.querySelectorAll('main > *');
+const navlinks = (document.querySelectorAll('aside > ul a'));
+const handleLinkChange = () => {
+    navlinks.forEach(link => {
+        const listItem = link.parentElement;
+        const isCurrentHash = link.href.split('/').slice(-1).pop() === location.hash;
         if (isCurrentHash) {
-            link.parentElement.classList.add('u-navlink-active');
-            link.parentElement.classList.remove('hover:text-white');
+            listItem.classList.add('u-navlink-active');
+            listItem.classList.remove('hover:text-white');
         }
         else {
-            link.parentElement.classList.remove('u-navlink-active');
-            link.parentElement.classList.add('hover:text-white');
+            listItem.classList.remove('u-navlink-active');
+            listItem.classList.add('hover:text-white');
         }
     });
 };
-var handleScreenChange = function () {
-    screens.forEach(function (sc) {
-        if (sc.id === location.hash.replace('#', ''))
+const getWindowHashValue = () => location.hash.replace('#', '');
+const handleScreenChange = () => {
+    screens.forEach(sc => {
+        if (sc.id === getWindowHashValue())
             sc.classList.remove('hidden');
         else
             sc.classList.add('hidden');
     });
 };
-var handleHashChange = function () {
+const handleHashChange = function () {
     handleLinkChange();
     handleScreenChange();
 };
-console.log(screens);
-window.onhashchange = handleHashChange;
-window.onload = function () {
-    if (location.hash.replace('#', ''))
-        return;
-    location.hash = '#about';
+// console.log(screens);
+const init = () => {
+    window.onhashchange = handleHashChange;
+    if (!getWindowHashValue())
+        location.hash = '#about';
+    handleHashChange();
 };
-handleHashChange();
+window.onload = init;
 //# sourceMappingURL=entry.js.map

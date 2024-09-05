@@ -80,24 +80,6 @@
       .scrollbar-track-rounded::-webkit-scrollbar-track {
         @apply rounded-full;
       }
-
-      .pg-zoom-in {
-        @apply scale-100 opacity-100 z-[3];
-      }
-      .pg-slide-from-right {
-        @apply translate-x-0 opacity-100 z-[3];
-      }
-      .pg-zoom-out {
-        @apply scale-50 opacity-0;
-      }
-      .pg-slide-out-right {
-        @apply translate-x-[400px] opacity-0;
-      }
-
-      /* .screen-active {
-        @apply 
-      }
-      .screen-active */
     }
 
     @layer components {
@@ -109,7 +91,7 @@
         + label
         > div
         > div:where(.bg-black) {
-        transform: translateX(60%);
+        transform: translateX(57%);
       }
       .cmp-check > input[type='checkbox']:not(:checked) + label > div {
         @apply bg-[#fff]/[.3];
@@ -137,14 +119,13 @@
       src="{{ url_for('static', filename='/man-focusing-on-analysis.mp4' )}}"
       class="block absolute inset-0 h-screen w-screen object-cover"
       preload
-      autoplay
       loop
       muted
     ></video>
     <!-- autoplay -->
 
     <div
-      class="container xl:max-w-[1000px] grid grid-cols-[14%_1fr] grid-rows-[auto_1fr] gap-8 gap-x-16 relative z-[5] text-textdefault pt-5"
+      class="container xl:max-w-[1000px] grid grid-cols-[14%_1fr] grid-rows-[auto_1fr] gap-y-10 gap-x-16 relative z-[5] text-textdefault pt-5"
     >
       <header class="col-span-full">
         <h1 class="font-josefin-sans text-2xl text-right text-white">
@@ -175,6 +156,7 @@
       </aside>
 
       <main class="h-full">
+        <!-- Model Features -->
         <div
           class="h-full max-h-full flex flex-col gap-7 leading-8"
           id="features"
@@ -188,6 +170,7 @@
           </p>
         </div>
 
+        <!-- About Model -->
         <div class="h-full max-h-full flex flex-col gap-7 leading-8" id="about">
           <h1 class="text-4xl text-white/90">About Model</h1>
           <p>
@@ -207,257 +190,28 @@
           >
         </div>
 
-        <div class="h-full max-h-full flex flex-col gap-4" id="predict">
+        <!-- Prediction -->
+        <form
+          action=""
+          class="h-full max-h-full flex flex-col gap-3"
+          id="predict"
+        >
           <h2 class="text-3xl text-white/90">Predict</h2>
-          <form
-            action=""
-            class="basis-[60%] grid grid-cols-responsive items-start gap-8 py-7 overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded"
+          <div
+            id="inputs-container"
+            class="h-full basis-[60%] grid grid-cols-responsive items-start gap-8 py-7 overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded"
           >
-            <div class="relative max-h-max">
-              <input
-                type="number"
-                min="0"
-                id="key"
-                class="cmp-textfield"
-                placeholder="Tenure"
-              />
-              <label
-                for="key"
-                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
-                >Tenure</label
-              >
-            </div>
+            <!-- Form fields here -->
+          </div>
 
-            <div class="relative max-h-max">
-              <input
-                type="number"
-                min="0"
-                id="key"
-                class="cmp-textfield"
-                placeholder="Tenure"
-              />
-              <label
-                for="key"
-                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
-                >Tenure</label
-              >
-            </div>
-
-            <div class="relative max-h-max">
-              <input
-                type="number"
-                min="0"
-                id="key"
-                class="cmp-textfield"
-                placeholder="Tenure"
-              />
-              <label
-                for="key"
-                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
-                >Tenure</label
-              >
-            </div>
-
-            <div class="cmp-check relative -translate-y-[7px]">
-              <input type="checkbox" id="check" class="absolute opacity-0" />
-              <label
-                for="check"
-                class="relative flex flex-col gap-2 cursor-pointer"
-              >
-                <span>Has Device Protection</span>
-                <div class="w-28 h-10 bg-pry rounded-full relative">
-                  <div
-                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
-                  ></div>
-                </div>
-              </label>
-            </div>
-
-            <div class="relative max-h-max">
-              <input
-                type="number"
-                min="0"
-                id="key"
-                class="cmp-textfield"
-                placeholder="Tenure"
-              />
-              <label
-                for="key"
-                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
-                >Tenure</label
-              >
-            </div>
-
-            <div class="cmp-check relative -translate-y-[7px]">
-              <input type="checkbox" id="1" class="absolute opacity-0" />
-              <label
-                for="1"
-                class="relative flex flex-col gap-2 cursor-pointer"
-              >
-                <span>Has Device Protection</span>
-                <div class="w-28 h-10 bg-pry rounded-full relative">
-                  <div
-                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
-                  ></div>
-                </div>
-              </label>
-            </div>
-
-            <div class="relative max-h-max">
-              <input
-                type="number"
-                min="0"
-                id="key"
-                class="cmp-textfield"
-                placeholder="Tenure"
-              />
-              <label
-                for="key"
-                class="absolute bottom-[50%] left-4 translate-y-[50%] opacity-0 transition-bottom transition-all"
-                >Tenure</label
-              >
-            </div>
-
-            <div class="cmp-check relative -translate-y-[7px]">
-              <input type="checkbox" id="checked" class="absolute opacity-0" />
-              <label
-                for="checked"
-                class="relative flex flex-col gap-2 cursor-pointer"
-              >
-                <span>Has Device Protection</span>
-                <div class="w-28 h-10 bg-pry rounded-full relative">
-                  <div
-                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
-                  ></div>
-                </div>
-              </label>
-            </div>
-
-            <div class="cmp-check relative -translate-y-[7px]">
-              <input type="checkbox" id="checkedd" class="absolute opacity-0" />
-              <label
-                for="check"
-                class="relative flex flex-col gap-2 cursor-pointer"
-              >
-                <span class="">Has Device Protection</span>
-                <div class="w-28 h-10 bg-pry rounded-full relative">
-                  <div
-                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
-                  ></div>
-                </div>
-              </label>
-            </div>
-
-            <div class="flex flex-col gap-2 relative">
-              <label for="">Internet Service</label>
-              <select
-                name=""
-                id=""
-                class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
-              >
-                <option
-                  value=""
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  Please select a value
-                </option>
-                <option
-                  value="DHL"
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  DHL
-                </option>
-                <option
-                  value="FIBRE_OPTIC"
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  Fibre Optic
-                </option>
-              </select>
-            </div>
-
-            <div class="cmp-check relative -translate-y-[7px]">
-              <input type="checkbox" id="check" class="absolute opacity-0" />
-              <label
-                for="check"
-                class="relative flex flex-col gap-2 cursor-pointer"
-              >
-                <span>Has Device Protection</span>
-                <div class="w-28 h-10 bg-pry rounded-full relative">
-                  <div
-                    class="w-[60%] absolute inset-[3px] rounded-full bg-black transition-all"
-                  ></div>
-                </div>
-              </label>
-            </div>
-
-            <div class="flex flex-col gap-2 relative">
-              <label for="" class="absolutee -top-[30px] left-0"
-                >Internet Service</label
-              >
-              <select
-                name=""
-                id=""
-                class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
-              >
-                <option
-                  value=""
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  Please select a value
-                </option>
-                <option
-                  value="DHL"
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  DHL
-                </option>
-                <option
-                  value="FIBRE_OPTIC"
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  Fibre Optic
-                </option>
-              </select>
-            </div>
-
-            <div class="flex flex-col gap-2 relative">
-              <label for="" class="absolutee -top-[30px] left-0"
-                >Internet Service</label
-              >
-              <select
-                name=""
-                id=""
-                class="cmp-textfield bg-bgdefault p-3 px-4 rounded-md cursor-pointer"
-              >
-                <option
-                  value=""
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  Please select a value
-                </option>
-                <option
-                  value="DHL"
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  DHL
-                </option>
-                <option
-                  value="FIBRE_OPTIC"
-                  class="bg-black text-textdefault hover:bg-white"
-                >
-                  Fibre Optic
-                </option>
-              </select>
-            </div>
-          </form>
-
-          <button class="self-start mx-auto cmp-btn cmp-btn-pry cmp-btn-long">
+          <button
+            type="submit"
+            class="self-start cmp-btn cmp-btn-pry cmp-btn-long"
+          >
             Predict
           </button>
-        </div>
+        </form>
       </main>
     </div>
   </body>
 </html>
-<!-- before:absolute before:w-1 before:h-1 top-[50%] -translate-y-[50%] before:rounded-full before:bg-pry -->

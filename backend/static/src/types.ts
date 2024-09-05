@@ -10,3 +10,10 @@ interface PageObj {
   entryExit: [EntryAnimation, ExitAnimation];
   className?: string;
 }
+
+interface ComponentObj {
+  html: string;
+  parent: Element | null;
+}
+
+type SubmitHandler = GlobalEventHandlers['onsubmit'];
