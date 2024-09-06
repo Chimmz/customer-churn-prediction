@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, render_template
 from flask import request, redirect, url_for
 import pandas as pd
+import sklearn
 import joblib
+import json
 
 app = Flask(__name__)
 
@@ -10,22 +12,28 @@ def home():
   model = joblib.load('forest_final_churn.pkl')
 
   feature_performances = dict(zip(model.feature_names_in_, model.feature_importances_))
-  print()
   return render_template('index.html',
                          data={'feature_names': model.feature_names_in_,
                                'feature_performances': feature_performances})
 
 @app.route('/predict', methods=['POST'])
 def predict():
-  print('First: ', request.get_json().get('InternetService'))
-  predictors = pd.DataFrame(request.json)
-  print(predictors)
+  try:
+    X = pd.DataFrame(request.json)
+    print(X)
+    model = joblib.load('forest_final_churn.pkl')
+    preds = model.predict(X)
+    print({'preds': preds})
 
-  model = joblib.load('forest_final_churn.pkl')
-  pred = model.predict(predictors)
+    def decode_pred(pred: int):
+      return {'churn': bool(pred),
+              'msg': f"This customer is predicted {('' if pred else 'NOT')} to churn"}
+    
+    return {'status': 'success',
+            'predictions': list(map(decode_pred, preds)),
+            'total_preds': len(preds)}
   
-  print({'pred': pred})
-  return {'pred': pred}
-
+  except Exception as err:
+    return {'status': 'error', 'msg': json.dump(err)}
 
 app.run(debug=True)

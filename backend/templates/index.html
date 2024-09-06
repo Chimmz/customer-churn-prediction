@@ -14,7 +14,7 @@
     <title>Customer Churn Prediction</title>
 
     <script
-      src="{{ url_for('static', filename='/src/dist/entry.js') }}"
+      src="{{ url_for('static', filename='/src/dist/main.js') }}"
       type="module"
     ></script>
 
@@ -51,6 +51,11 @@
       outline: none;
       font: inherit;
     }
+    input[type='checkbox']:active + label,
+    label:has(+ select:focus) {
+      @apply text-pry;
+    }
+
     .cmp-textfield:not(:placeholder-shown) + label {
       bottom: calc(100% + 15px);
       left: 0;
@@ -156,20 +161,6 @@
       </aside>
 
       <main class="h-full">
-        <!-- Model Features -->
-        <div
-          class="h-full max-h-full flex flex-col gap-7 leading-8"
-          id="features"
-        >
-          <h2 class="text-3xl text-white/90">Model features</h2>
-          <p>
-            This is the model features page... consectetur. Adipiscing a enim ut
-            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
-            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
-            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
-          </p>
-        </div>
-
         <!-- About Model -->
         <div class="h-full max-h-full flex flex-col gap-7 leading-8" id="about">
           <h1 class="text-4xl text-white/90">About Model</h1>
@@ -211,6 +202,20 @@
             Predict
           </button>
         </form>
+
+        <!-- Model Features -->
+        <div
+          class="h-full max-h-full flex flex-col gap-7 leading-8"
+          id="features"
+        >
+          <h2 class="text-3xl text-white/90">Model features</h2>
+          <p>
+            This is the model features page... consectetur. Adipiscing a enim ut
+            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
+            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
+            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
+          </p>
+        </div>
       </main>
     </div>
   </body>

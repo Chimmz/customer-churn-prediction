@@ -25,12 +25,8 @@ const TextInput = ({ parent }: { parent: string | HTMLElement }) => {
           class="cmp-textfield"
           placeholder="${props.placeholder}"
         />
-        <label
-          for="${props.id}"
-          class="block"
-        >${props.label}</label>
+        <label for="${props.id}" class="block">${props.label}</label>
       </div>`;
-
     return new Component(html, parent);
   };
   return { create };

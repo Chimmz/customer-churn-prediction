@@ -1,28 +1,9 @@
 import Checkbox from '../components/Checkbox.js';
-import Component from '../components/index.js';
 import Select from '../components/Select.js';
 import TextInput from '../components/TextInput.js';
 import { shuffleArray } from '../utils.js';
 
 const form = document.querySelector('form#predict')! as HTMLFormElement;
-const FEATURES = [
-  'gender',
-  'Partner',
-  'Dependents',
-  'tenure',
-  'MultipleLines',
-  'InternetService',
-  'OnlineSecurity',
-  'OnlineBackup',
-  'DeviceProtection',
-  'TechSupport',
-  'Contract',
-  'PaymentMethod',
-  'MonthlyCharges',
-  'TotalCharges'
-];
-
-const FIELDS_CONTAINER = 'form#predict > #inputs-container';
 
 const NUMERIC_FEATURES = [
   ['tenure', 'Tenure'],
@@ -30,14 +11,31 @@ const NUMERIC_FEATURES = [
   ['TotalCharges', 'Total Charges']
 ];
 
+const featureNamesInOrder = [
+  'gender',
+  'Partner',
+  'Dependents',
+  'tenure',
+  'InternetService',
+  'OnlineSecurity',
+  'OnlineBackup',
+  'DeviceProtection',
+  'TechSupport',
+  'Contract',
+  'PaperlessBilling',
+  'PaymentMethod',
+  'MonthlyCharges',
+  'TotalCharges'
+];
+
 const CHECKBOX_FIELDS = [
   ['Dependents', 'Has Dependents'],
-  ['MultipleLines', 'Has Multiple Lines'],
   ['OnlineBackup', 'Has Online Backup'],
   ['DeviceProtection', 'Has Device Protection'],
   ['TechSupport', 'Has Tech Support'],
   ['Partner', 'Has Partner'],
-  ['OnlineSecurity', 'Has Online Security']
+  ['OnlineSecurity', 'Has Online Security'],
+  ['PaperlessBilling', 'Paperless Billing']
 ];
 
 const SELECTION_INPUTS = [
@@ -57,7 +55,7 @@ const SELECTION_INPUTS = [
   ]
 ];
 
-const inputInstance = TextInput({ parent: FIELDS_CONTAINER });
+const inputInstance = TextInput({ parent: 'form#predict > #inputs-container' });
 const numericsUI = NUMERIC_FEATURES.map(([feature, label]) => {
   return inputInstance.create({
     type: 'number',
@@ -70,12 +68,16 @@ const numericsUI = NUMERIC_FEATURES.map(([feature, label]) => {
   });
 });
 
-const checkboxInstance = Checkbox({ parent: FIELDS_CONTAINER });
+const checkboxInstance = Checkbox({
+  parent: 'form#predict > #inputs-container'
+});
 const checkboxesUI = CHECKBOX_FIELDS.map(([feature, label]) => {
   return checkboxInstance.create({ label, id: feature });
 });
 
-const selectionInstance = Select({ parent: FIELDS_CONTAINER });
+const selectionInstance = Select({
+  parent: 'form#predict > #inputs-container'
+});
 const selectionsUI = SELECTION_INPUTS.map(([feature, label, optns]) => {
   return selectionInstance.create({
     name: feature as string,
@@ -86,27 +88,36 @@ const selectionsUI = SELECTION_INPUTS.map(([feature, label, optns]) => {
 
 const inputComps = [...numericsUI, ...checkboxesUI, ...selectionsUI];
 
-const getInputValue = (input: HTMLInputElement) => {
+const getHtmlInputValue = (input: HTMLInputElement) => {
   return input.type === 'checkbox' ? +input.checked : +input.value;
 };
 
 const predict = async function (this: HTMLFormElement) {
-  const inputs = Array.from(form.elements).slice(0, -1) as HTMLInputElement[];
-  const entries = inputs.map(el => [el.name, getInputValue(el)]) as [
-    string,
-    string | number
-  ][];
-  // Convert entries to object
-  const obj: { [k: string]: (string | number)[] } = {};
-  for (const [k, v] of entries) obj[k] = [v];
+  try {
+    const obj: { [k: string]: (string | number)[] } = {};
+    featureNamesInOrder.forEach(f => {
+      obj[f] = [getHtmlInputValue(form[f])];
+    });
 
-  const res = await fetch('/predict', {
-    method: 'POST',
-    body: JSON.stringify(obj),
-    headers: { 'Content-Type': 'application/json' }
-  });
+    const res = await fetch('/predict', {
+      method: 'POST',
+      body: JSON.stringify(obj),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await res.json();
 
-  console.log(await res.json());
+    switch (data.status) {
+      case 'success':
+        const [pred] = data.predictions;
+        window.alert(pred.msg);
+        break;
+      case 'error':
+        window.alert(data.msg);
+        break;
+    }
+  } catch (err) {
+    window.alert((err as Error).message);
+  }
 };
 
 const init = () => {
@@ -114,6 +125,7 @@ const init = () => {
     ev.preventDefault();
     predict.call(this);
   });
+
   shuffleArray(inputComps).forEach(cmp => cmp.render());
 };
 

@@ -10,9 +10,7 @@ const Select = ({ parent }: { parent: string | HTMLElement }) => {
   const create = (props: SelectProps) => {
     const getOptionUI = (optn: string, i: number) => {
       return `
-        <option
-          value="${i}"
-          class="bg-black text-textdefault hover:bg-white"
+        <option value="${i}" class="bg-black text-textdefault hover:bg-white"
           ${i === 0 && 'selected'}
         >
           ${optn}
