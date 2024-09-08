@@ -1,4 +1,6 @@
-import './pages/Predict.js';
+import './pages/predict.js';
+import * as features from './pages/features.js';
+import { loadFeatureImportances } from './pages/features.js';
 const screens = document.querySelectorAll('main > *');
 const navlinks = (document.querySelectorAll('aside > ul a'));
 const handleLinkChange = () => {
@@ -24,15 +26,21 @@ const handleScreenChange = () => {
             sc.classList.add('hidden');
     });
 };
-const handleHashChange = function () {
+const onHashChange = function () {
     handleLinkChange();
     handleScreenChange();
 };
 const init = () => {
-    window.onhashchange = handleHashChange;
-    if (!getWindowHashValue())
-        location.hash = '#about';
-    handleHashChange();
+    window.onhashchange = onHashChange;
+    switch (getWindowHashValue()) {
+        case '':
+            location.hash = '#about';
+            break;
+        case 'features':
+            features.loadFeatureImportances();
+            break;
+    }
+    onHashChange();
 };
 window.onload = init;
 //# sourceMappingURL=main.js.map

@@ -16,6 +16,7 @@
     <script
       src="{{ url_for('static', filename='/src/dist/main.js') }}"
       type="module"
+      defer
     ></script>
 
     <script>
@@ -29,7 +30,7 @@
           extend: {
             colors: {
               pry: '#FF704D',
-              prydark: '#E24923',
+              prybright: '#FF9176',
               textdefault: 'rgba(255, 255, 255, .75)',
               bgdefault: 'rgba(255, 255, 255, .15)',
               success: '#1AAB8E',
@@ -45,11 +46,17 @@
   </head>
 
   <style type="text/tailwindcss">
+    .apexcharts-toolbar {
+      display: none;
+    }
     input,
     select,
     textarea {
       outline: none;
       font: inherit;
+    }
+    ::selection {
+      @apply bg-pry;
     }
     input[type='checkbox']:active + label,
     label:has(+ select:focus) {
@@ -85,6 +92,9 @@
       .scrollbar-track-rounded::-webkit-scrollbar-track {
         @apply rounded-full;
       }
+      .overflow-scrollbar {
+        @apply overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded;
+      }
     }
 
     @layer components {
@@ -109,7 +119,7 @@
         @apply min-w-[15rem];
       }
       .cmp-btn-pry {
-        @apply cmp-btn bg-pry text-black font-[700] hover:bg-prydark;
+        @apply cmp-btn bg-pry text-black font-[700] hover:bg-prybright;
       }
       .cmp-btn-sm {
         @apply px-4 py-3 text-[1.5rem];
@@ -118,13 +128,14 @@
   </style>
 
   <body
-    class="grid min-h-screen max-h-screen bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/75 overflow-hidden"
+    class="grid min-h-screen max-h-screen bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/65 overflow-hidden"
   >
     <video
-      src="{{ url_for('static', filename='/man-focusing-on-analysis.mp4' )}}"
+      src="{{ url_for('static', filename='/media/vid.mp4' )}}"
       class="block absolute inset-0 h-screen w-screen object-cover"
       preload
       loop
+      autoplay
       muted
     ></video>
     <!-- autoplay -->
@@ -145,7 +156,7 @@
           <li
             class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200"
           >
-            <a href="#about">About Model</a>
+            <a href="#about">About</a>
           </li>
           <li
             class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
@@ -155,7 +166,7 @@
           <li
             class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
           >
-            <a href="#features">Model features</a>
+            <a href="#features">Predictors</a>
           </li>
         </ul>
       </aside>
@@ -186,11 +197,12 @@
           action=""
           class="h-full max-h-full flex flex-col gap-3"
           id="predict"
+          novalidate
         >
           <h2 class="text-3xl text-white/90">Predict</h2>
           <div
             id="inputs-container"
-            class="h-full basis-[60%] grid grid-cols-responsive items-start gap-8 py-7 overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded"
+            class="h-full basis-[60%] grid grid-cols-responsive overflow-scrollbar items-start gap-8 py-7"
           >
             <!-- Form fields here -->
           </div>
@@ -205,16 +217,11 @@
 
         <!-- Model Features -->
         <div
-          class="h-full max-h-full flex flex-col gap-7 leading-8"
+          class="max-h-full overflow-scrollbar flex flex-col gap-7 leading-8"
           id="features"
         >
-          <h2 class="text-3xl text-white/90">Model features</h2>
-          <p>
-            This is the model features page... consectetur. Adipiscing a enim ut
-            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
-            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
-            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
-          </p>
+          <h2 class="text-3xl text-white/90">Predictors</h2>
+          <div class="" id="feature_importance_chart"></div>
         </div>
       </main>
     </div>

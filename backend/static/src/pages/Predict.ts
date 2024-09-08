@@ -4,6 +4,7 @@ import TextInput from '../components/TextInput.js';
 import { shuffleArray } from '../utils.js';
 
 const form = document.querySelector('form#predict')! as HTMLFormElement;
+const btnSubmit = form.querySelector('button[type="submit"]')!;
 
 const NUMERIC_FEATURES = [
   ['tenure', 'Tenure'],
@@ -55,14 +56,17 @@ const SELECTION_INPUTS = [
   ]
 ];
 
-const inputInstance = TextInput({ parent: 'form#predict > #inputs-container' });
+const customInputInstance = TextInput({
+  parent: 'form#predict > #inputs-container'
+});
 const numericsUI = NUMERIC_FEATURES.map(([feature, label]) => {
-  return inputInstance.create({
+  return customInputInstance.create({
     type: 'number',
     id: feature,
     name: feature,
     min: 0,
-    step: feature === 'tenure' ? 1 : 0.1,
+    step: feature === 'tenure' ? 1 : 0.5,
+    dataType: feature === 'tenure' ? 'numeric' : 'decimal',
     label,
     placeholder: label
   });
@@ -96,7 +100,7 @@ const predict = async function (this: HTMLFormElement) {
   try {
     const obj: { [k: string]: (string | number)[] } = {};
     featureNamesInOrder.forEach(f => {
-      obj[f] = [getHtmlInputValue(form[f])];
+      obj[f] = [getHtmlInputValue(this[f])];
     });
 
     const res = await fetch('/predict', {
@@ -117,12 +121,15 @@ const predict = async function (this: HTMLFormElement) {
     }
   } catch (err) {
     window.alert((err as Error).message);
+  } finally {
+    btnSubmit.textContent = 'Predict';
   }
 };
 
 const init = () => {
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
+    btnSubmit.textContent = 'Predicting...';
     predict.call(this);
   });
 

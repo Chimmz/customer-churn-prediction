@@ -12,6 +12,7 @@ import Select from '../components/Select.js';
 import TextInput from '../components/TextInput.js';
 import { shuffleArray } from '../utils.js';
 const form = document.querySelector('form#predict');
+const btnSubmit = form.querySelector('button[type="submit"]');
 const NUMERIC_FEATURES = [
     ['tenure', 'Tenure'],
     ['MonthlyCharges', 'Monthly Charges'],
@@ -57,14 +58,17 @@ const SELECTION_INPUTS = [
         ]
     ]
 ];
-const inputInstance = TextInput({ parent: 'form#predict > #inputs-container' });
+const customInputInstance = TextInput({
+    parent: 'form#predict > #inputs-container'
+});
 const numericsUI = NUMERIC_FEATURES.map(([feature, label]) => {
-    return inputInstance.create({
+    return customInputInstance.create({
         type: 'number',
         id: feature,
         name: feature,
         min: 0,
-        step: feature === 'tenure' ? 1 : 0.1,
+        step: feature === 'tenure' ? 1 : 0.5,
+        dataType: feature === 'tenure' ? 'numeric' : 'decimal',
         label,
         placeholder: label
     });
@@ -94,7 +98,7 @@ const predict = function () {
         try {
             const obj = {};
             featureNamesInOrder.forEach(f => {
-                obj[f] = [getHtmlInputValue(form[f])];
+                obj[f] = [getHtmlInputValue(this[f])];
             });
             const res = yield fetch('/predict', {
                 method: 'POST',
@@ -115,14 +119,18 @@ const predict = function () {
         catch (err) {
             window.alert(err.message);
         }
+        finally {
+            btnSubmit.textContent = 'Predict';
+        }
     });
 };
 const init = () => {
     form.addEventListener('submit', function (ev) {
         ev.preventDefault();
+        btnSubmit.textContent = 'Predicting...';
         predict.call(this);
     });
     shuffleArray(inputComps).forEach(cmp => cmp.render());
 };
 init();
-//# sourceMappingURL=Predict.js.map
+//# sourceMappingURL=predict.js.map

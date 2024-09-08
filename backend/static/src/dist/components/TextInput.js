@@ -1,11 +1,12 @@
 import Component from './index.js';
 const TextInput = ({ parent }) => {
     const create = (props) => {
-        const { min = 0, step = 1 } = props;
+        const { min = 0, step = 1, inputMode = 'text' } = props;
         const html = `
       <div class="relative flex flex-col-reverse gap-2 max-h-max">
         <input
           type="${props.type}"
+          inputmode="${inputMode}"
           min=${min}
           name="${props.id}"
           step="${props.step}"

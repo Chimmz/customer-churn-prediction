@@ -8,7 +8,7 @@ interface CheckboxProps {
 const Checkbox = ({ parent }: { parent: string | HTMLElement }) => {
   const create = (props: CheckboxProps) => {
     const html = `
-      <div class="cmp-check relative max-w-max -translate-y-[7px]">
+      <div class="cmp-check relative max-w-max">
         <input type="checkbox" id="${props.id}" name="${props.id}" class="hidden" />
         <label for="${props.id}" class="relative flex flex-col gap-2 cursor-pointer">
           <span>${props.label}</span>
