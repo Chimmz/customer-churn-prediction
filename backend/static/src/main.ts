@@ -1,6 +1,5 @@
 import './pages/predict.js';
 import * as features from './pages/features.js';
-import { loadFeatureImportances } from './pages/features.js';
 
 const screens = document.querySelectorAll('main > *');
 const navlinks = <NodeListOf<HTMLLinkElement>>(
@@ -17,6 +16,7 @@ const handleLinkChange = () => {
       listItem.classList.add('u-navlink-active');
       listItem.classList.remove('hover:text-white');
     } else {
+      listItem.classList.remove('u-navlink-active');
       listItem.classList.add('hover:text-white');
     }
   });
@@ -40,7 +40,7 @@ const init = () => {
   window.onhashchange = onHashChange;
   switch (getWindowHashValue()) {
     case '':
-      location.hash = '#about';
+      location.hash = '#overview';
       break;
     case 'features':
       features.loadFeatureImportances();
@@ -48,5 +48,4 @@ const init = () => {
   }
   onHashChange();
 };
-
 window.onload = init;

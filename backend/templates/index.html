@@ -12,7 +12,7 @@
       rel="stylesheet"
     />
 
-    <title>Customer Churn Prediction</title>
+    <title>Customer Churn Prediction | By Chima Orji</title>
 
     <script
       src="{{ url_for('static', filename='/src/dist/main.js') }}"
@@ -32,7 +32,7 @@
             colors: {
               pry: '#FF704D',
               prybright: '#FF9176',
-              textdefault: 'rgba(255, 255, 255, .75)',
+              textdefault: 'rgba(255, 255, 255, .8)',
               bgdefault: 'rgba(255, 255, 255, .15)',
               success: '#1AAB8E',
               fail: '#EC6774'
@@ -126,14 +126,17 @@
       .cmp-btn-pry {
         @apply cmp-btn bg-pry text-black font-[700] hover:bg-prybright;
       }
+      .cmp-btn-outline-pry {
+        @apply cmp-btn bg-[#000] border-2 border-pry text-textdefault hover:bg-[#000]/[.4] hover:text-pry;
+      }
       .cmp-btn-sm {
-        @apply px-4 py-3 text-[1.5rem];
+        @apply text-[15px] py-2 px-5;
       }
     }
   </style>
 
   <body
-    class="grid min-h-screen max-h-screen font-nunito bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/65 overflow-hidden"
+    class="grid min-h-screen max-h-screen font-nunito bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/[.8] overflow-hidden"
   >
     <video
       src="{{ url_for('static', filename='/media/vid.mp4' )}}"
@@ -145,41 +148,50 @@
     <!-- autoplay -->
 
     <div
-      class="container xl:max-w-[1000px] grid grid-cols-[14%_1fr] grid-rows-[auto_1fr] gap-y-10 gap-x-16 relative z-[5] text-textdefault pt-5"
+      class="container xl:max-w-[1000px] grid grid-cols-[15%_1fr] grid-rows-[auto_1fr] items-start gap-y-8 gap-x-16 relative z-[5] text-textdefault pt-5"
     >
       <header class="col-span-full">
         <h1 class="font-josefin-sans text-2xl text-right text-white">
-          Customer <span class="text-pry">Churn</span> Prediction
+          Customer Churn Prediction
+          <a
+            href="https://www.linkedin.com/in/chima-divine-orji/"
+            target="_blank"
+            class="text-pry text-[17px]"
+            >| By Chima Orji</a
+          >
+          <!-- <span class="text-pry>Churn</span> Prediction -->
         </h1>
       </header>
 
-      <aside class="h-full">
+      <!-- Left navigation -->
+      <aside class="h-full bg-[#fff/[.05] py7 rounded-l">
         <ul
-          class="h-[50%] flex flex-col gap-7 border-r-[2.5px] border-white/15 py-7"
+          class="h-[300px] flex flex-col gap-7 border-r-[2.5px] border-white/15 py-7"
         >
           <li
-            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200"
+            class="text-right translate-x-[2.5px] min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
           >
-            <a href="#about">Overview</a>
+            <a href="#overview">Overview</a>
           </li>
           <li
-            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+            class="text-right translate-x-[2.5px] min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
           >
             <a href="#features">Predictors</a>
           </li>
           <li
-            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+            class="text-right translate-x-[2.5px] min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
           >
             <a href="#predict">Predict Churn</a>
           </li>
         </ul>
       </aside>
 
+      <!-- MAIN CONTENT -->
       <main class="h-full text-[17px]">
         <!-- About Model -->
         <div
-          class="max-h-[85%] flex flex-col gap-7 overflow-scrollbar leading-8"
-          id="about"
+          class="max-h-[60%] flex flex-col gap-7 overflow-scrollbar leading-8"
+          id="overview"
         >
           <h1 class="text-4xl text-white/90">Overview</h1>
 
@@ -219,22 +231,24 @@
           <div class="flex flex-col gap-2">
             <h5 class="uppercase text-[15px] text-pry">Model Explanation</h5>
             <p>
-              Predicting which customer will churn in the future allows telecom
-              companies offer targeted & personalized incentives or address
-              issues/dissatisfactions before they lead to churn.
+              For this project, I implemented a Random Forest model, an ensemble
+              learning technique that combines multiple decision trees to
+              improve accuracy and reduce overfitting. Random Forest is ideal
+              for this churn prediction task due to its ability to handle a mix
+              of categorical and numerical data, while providing feature
+              importance insights for interpretability.
+            </p>
+            <p>
+              The training dataset exhibited primarily non-linear patterns,
+              which Logistic Regression (a linear model) struggles with, while
+              Random Forest can naturally handle both linear and non-linear
+              relationships.
             </p>
           </div>
 
-          <p>
-            Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut
-            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
-            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
-            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
-          </p>
-
-          <a href="#predict" class="self-start cmp-btn cmp-btn-pry"
-            >Test model</a
-          >
+          <a href="#features" class="self-start cmp-btn cmp-btn-pry cmp-btn-sm">
+            See feature importances
+          </a>
         </div>
 
         <!-- Prediction -->
@@ -262,11 +276,15 @@
 
         <!-- Model Features -->
         <div
-          class="max-h-full overflow-scrollbar flex flex-col gap-7 leading-8"
+          class="max-h-[80%] overflow-scrollbar flex flex-col gap-7 leading-8"
           id="features"
         >
           <h2 class="text-3xl text-white/90">Predictors</h2>
           <div class="" id="feature_importance_chart"></div>
+
+          <button type="submit" class="self-start cmp-btn-pry cmp-btn-sm">
+            Make a prediction
+          </button>
         </div>
       </main>
     </div>

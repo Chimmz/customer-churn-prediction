@@ -18,7 +18,7 @@ export const loadFeatureImportances = function () {
             console.log(data);
             switch (data.status) {
                 case 'success':
-                    plotBars(data.feature_importances);
+                    plotBarChart(data.feature_importances);
                     break;
                 case 'error':
                     window.alert(data.msg);
@@ -28,11 +28,9 @@ export const loadFeatureImportances = function () {
         catch (err) {
             window.alert(err.message);
         }
-        finally {
-        }
     });
 };
-const plotBars = (importances) => {
+const plotBarChart = (importances) => {
     const barData = [];
     // Populate bar data
     for (const key in importances)
@@ -64,6 +62,16 @@ const plotBars = (importances) => {
                     fontSize: '15px',
                     fontFamily: 'Nunito'
                 }
+            },
+            title: {
+                text: 'Feature',
+                offsetX: 10,
+                style: {
+                    color: LABEL_TITLE_COLOR,
+                    fontSize: '15px',
+                    fontFamily: 'Nunito',
+                    fontWeight: 400
+                }
             }
         },
         yaxis: {
@@ -75,8 +83,6 @@ const plotBars = (importances) => {
             stepSize: undefined,
             labels: {
                 show: true,
-                minWidth: 0,
-                maxWidth: 160,
                 style: {
                     colors: barData.map(() => LABEL_COLOR),
                     fontSize: '14px',
@@ -97,13 +103,14 @@ const plotBars = (importances) => {
                     color: LABEL_TITLE_COLOR,
                     fontSize: '15px',
                     fontFamily: 'Nunito',
-                    fontWeight: 600
+                    fontWeight: 400
                 }
             },
             tooltip: { enabled: false }
         },
         dataLabels: {
             enabled: true,
+            // enabled: window.innerHeight <= 640,
             enabledOnSeries: undefined,
             formatter: (val) => val + '%',
             style: {
@@ -112,46 +119,30 @@ const plotBars = (importances) => {
                 fontWeight: 'bold',
                 colors: barData.map(() => '#000')
             },
-            background: {
-                enabled: false
-            },
+            background: { enabled: false },
             dropShadow: {
-                enabled: false,
-                top: 1,
-                left: 1,
-                blur: 1,
-                color: '#000',
-                opacity: 0.45
+                enabled: false
             }
         },
         tooltip: {
+            custom: (data) => {
+                return `\
+        <div class="bg-[#fff]/[.05] text-black p-1 px-2">${barData[data.dataPointIndex].x}:
+          <span class="text-pry">${data.series[data.seriesIndex][data.dataPointIndex]}%</span>
+        </div>`;
+            },
             enabled: true,
             followCursor: true,
-            inverseOrder: false,
-            custom: undefined,
-            hideEmptySeries: true,
             fillSeriesColor: true,
-            theme: false,
             style: {
                 fontSize: '14px',
                 color: 'black',
                 fontFamily: 'Nunito',
-                backgroundColor: '#000'
+                backgroundColor: 'black'
             },
-            x: {
-                show: true,
-                format: 'dd MMM',
-                formatter: undefined
-            },
-            y: {
-                formatter: undefined,
-                title: {
-                    formatter: (seriesName) => 'Importance:'
-                }
-            },
-            marker: {
-                show: true
-            }
+            x: { show: true, formatter: undefined },
+            y: { formatter: undefined, title: { formatter: () => 'Importance:' } },
+            marker: { show: true }
         }
     };
     // @ts-ignore
@@ -165,9 +156,4 @@ window.addEventListener('hashchange', () => {
     if (!chartLoadedBefore)
         loadFeatureImportances();
 });
-// window.onload = () => {
-//   alert();
-//   if (window.location.hash.replace('#', '') === 'features')
-//     loadFeatureImportances();
-// };
 //# sourceMappingURL=features.js.map

@@ -63,8 +63,8 @@ const customInputInstance = TextInput({
 });
 const numericsUI = NUMERIC_FEATURES.map(([feature, label]) => {
     return customInputInstance.create({
-        type: 'number',
         id: feature,
+        type: 'number',
         name: feature,
         min: 0,
         step: feature === 'tenure' ? 1 : 0.5,
@@ -89,7 +89,7 @@ const selectionsUI = SELECTION_INPUTS.map(([feature, label, optns]) => {
         options: optns
     });
 });
-const inputComps = [...numericsUI, ...checkboxesUI, ...selectionsUI];
+const inputsUI = [...numericsUI, ...checkboxesUI, ...selectionsUI];
 const getHtmlInputValue = (input) => {
     return input.type === 'checkbox' ? +input.checked : +input.value;
 };
@@ -106,6 +106,7 @@ const predict = function () {
                 headers: { 'Content-Type': 'application/json' }
             });
             const data = yield res.json();
+            btnSubmit.textContent = 'Predict';
             switch (data.status) {
                 case 'success':
                     const [pred] = data.predictions;
@@ -119,18 +120,15 @@ const predict = function () {
         catch (err) {
             window.alert(err.message);
         }
-        finally {
-            btnSubmit.textContent = 'Predict';
-        }
     });
 };
 const init = () => {
+    shuffleArray(inputsUI).forEach(cmp => cmp.render());
     form.addEventListener('submit', function (ev) {
         ev.preventDefault();
         btnSubmit.textContent = 'Predicting...';
         predict.call(this);
     });
-    shuffleArray(inputComps).forEach(cmp => cmp.render());
 };
 init();
 //# sourceMappingURL=predict.js.map

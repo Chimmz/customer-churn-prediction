@@ -22,7 +22,6 @@ export const loadFeatureImportances = async function () {
 
 const plotBarChart = (importances: { [k: string]: number }) => {
   const barData: Array<{ x: string; y: number }> = [];
-
   // Populate bar data
   for (const key in importances) barData.push({ x: key, y: importances[key] });
 
@@ -55,6 +54,16 @@ const plotBarChart = (importances: { [k: string]: number }) => {
           fontSize: '15px',
           fontFamily: 'Nunito'
         }
+      },
+      title: {
+        text: 'Feature',
+        offsetX: 10,
+        style: {
+          color: LABEL_TITLE_COLOR,
+          fontSize: '15px',
+          fontFamily: 'Nunito',
+          fontWeight: 400
+        }
       }
     },
     yaxis: {
@@ -66,8 +75,6 @@ const plotBarChart = (importances: { [k: string]: number }) => {
       stepSize: undefined,
       labels: {
         show: true,
-        minWidth: 0,
-        maxWidth: 160,
         style: {
           colors: barData.map(() => LABEL_COLOR),
           fontSize: '14px',
@@ -88,13 +95,14 @@ const plotBarChart = (importances: { [k: string]: number }) => {
           color: LABEL_TITLE_COLOR,
           fontSize: '15px',
           fontFamily: 'Nunito',
-          fontWeight: 600
+          fontWeight: 400
         }
       },
       tooltip: { enabled: false }
     },
     dataLabels: {
       enabled: true,
+      // enabled: window.innerHeight <= 640,
       enabledOnSeries: undefined,
       formatter: (val: number) => val + '%',
       style: {
@@ -105,26 +113,36 @@ const plotBarChart = (importances: { [k: string]: number }) => {
       },
       background: { enabled: false },
       dropShadow: {
-        enabled: false,
-        top: 1,
-        left: 1,
-        blur: 1,
-        color: '#000',
-        opacity: 0.45
+        enabled: false
       }
     },
     tooltip: {
+      custom: (data: {
+        series: [number][];
+        seriesIndex: number;
+        dataPointIndex: number;
+      }) => {
+        return `\
+        <div class="bg-[#fff]/[.05] text-black p-1 px-2">${
+          barData[data.dataPointIndex].x
+        }:
+          <span class="text-pry">${
+            data.series[data.seriesIndex][data.dataPointIndex]
+          }%</span>
+        </div>`;
+      },
       enabled: true,
       followCursor: true,
       fillSeriesColor: true,
       style: {
         fontSize: '14px',
-        color: '#000',
+        color: 'black',
         fontFamily: 'Nunito',
-        backgroundColor: '#000'
+        backgroundColor: 'black'
       },
+
       x: { show: true, formatter: undefined },
-      y: { formatter: undefined, title: 'Importance:' },
+      y: { formatter: undefined, title: { formatter: () => 'Importance:' } },
       marker: { show: true }
     }
   };

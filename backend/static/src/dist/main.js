@@ -1,6 +1,5 @@
 import './pages/predict.js';
 import * as features from './pages/features.js';
-import { loadFeatureImportances } from './pages/features.js';
 const screens = document.querySelectorAll('main > *');
 const navlinks = (document.querySelectorAll('aside > ul a'));
 const handleLinkChange = () => {
@@ -34,7 +33,7 @@ const init = () => {
     window.onhashchange = onHashChange;
     switch (getWindowHashValue()) {
         case '':
-            location.hash = '#about';
+            location.hash = '#overview';
             break;
         case 'features':
             features.loadFeatureImportances();

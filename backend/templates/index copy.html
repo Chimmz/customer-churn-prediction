@@ -412,3 +412,293 @@
   </body>
 </html>
 <!-- before:absolute before:w-1 before:h-1 top-[50%] -translate-y-[50%] before:rounded-full before:bg-pry -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Customer Churn Prediction</title>
+
+    <script
+      src="{{ url_for('static', filename='/src/dist/main.js') }}"
+      type="module"
+      defer
+    ></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          fontFamily: {
+            nunito: ['Nunito', 'sans-serif'],
+            'josefin-sans': ['Josefin Sans', 'serif']
+          },
+          container: { center: true },
+          extend: {
+            colors: {
+              pry: '#FF704D',
+              prybright: '#FF9176',
+              textdefault: 'rgba(255, 255, 255, .8)',
+              bgdefault: 'rgba(255, 255, 255, .15)',
+              success: '#1AAB8E',
+              fail: '#EC6774'
+            },
+            gridTemplateColumns: {
+              responsive: 'repeat(auto-fit, minmax(12rem, 1fr))'
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <!-- Your best customers will buy from you again and again — and you don't need to spend more money to attract them -->
+
+  <style type="text/tailwindcss">
+    html {
+      /* font-size: 62.5%; */
+    }
+    .apexcharts-toolbar {
+      display: none;
+    }
+    input,
+    select,
+    textarea {
+      outline: none;
+      font: inherit;
+    }
+    ::selection {
+      @apply bg-pry text-black;
+    }
+    input[type='checkbox']:active + label,
+    label:has(+ select:focus) {
+      @apply text-pry;
+    }
+
+    .cmp-textfield:not(:placeholder-shown) + label {
+      bottom: calc(100% + 15px);
+      left: 0;
+      @apply text-pry opacity-100;
+    }
+    .cmp-textfield:not(:focus) + label {
+      @apply text-inherit;
+    }
+
+    @layer utilities {
+      .u-navlink-active {
+        @apply text-pry font-bold border-r border-r-[3px] border-r-pry;
+      }
+      .u-flex-center {
+        @apply flex items-center justify-center;
+      }
+
+      .scrollbar-thin::-webkit-scrollbar {
+        @apply w-3;
+      }
+      .scrollbar-rounded::-webkit-scrollbar-thumb {
+        @apply rounded-full;
+      }
+      .scrollbar-gray::-webkit-scrollbar-thumb {
+        @apply bg-white/20;
+      }
+      .scrollbar-track-rounded::-webkit-scrollbar-track {
+        @apply rounded-full;
+      }
+      .overflow-scrollbar {
+        @apply overflow-y-scroll scrollbar-gray scrollbar-thin scrollbar-rounded scrollbar-track-rounded;
+      }
+    }
+
+    @layer components {
+      .cmp-textfield {
+        @apply max-w-[215px] bg-white/15 p-3 px-4 rounded-md focus:bg-transparent border border-transparent focus:border focus:border-pry;
+      }
+      .cmp-check
+        > input[type='checkbox']:checked
+        + label
+        > div
+        > div:where(.bg-black) {
+        transform: translateX(57%);
+      }
+      .cmp-check > input[type='checkbox']:not(:checked) + label > div {
+        @apply bg-[#fff]/[.3];
+      }
+
+      .cmp-btn {
+        @apply u-flex-center px-7 py-3 rounded-full text-center transition-colors duration-300;
+      }
+      .cmp-btn-long {
+        @apply min-w-[15rem];
+      }
+      .cmp-btn-pry {
+        @apply cmp-btn bg-pry text-black font-[700] hover:bg-prybright;
+      }
+      .cmp-btn-sm {
+        @apply text-[15px] py-2 px-5;
+      }
+    }
+  </style>
+
+  <body
+    class="grid min-h-screen max-h-screen font-nunito bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/[.8] overflow-hidden"
+  >
+    <video
+      src="{{ url_for('static', filename='/media/vid.mp4' )}}"
+      class="block absolute inset-0 h-screen w-screen object-cover"
+      preload
+      loop
+      autoplay
+      muted
+    ></video>
+    <!-- autoplay -->
+
+    <div
+      class="container xl:max-w-[1000px] grid grid-cols-[15%_1fr] grid-rows-[auto_1fr] items-start gap-y-6 gap-x-16 relative z-[5] text-textdefault pt-5"
+    >
+      <header class="col-span-full">
+        <h1 class="font-josefin-sans text-2xl text-right text-white">
+          Customer <span class="text-pry">Churn</span> Prediction
+        </h1>
+      </header>
+      <!--  border-r-[2.5px] border-white/15 py-7 ON <ul> -->
+      <!-- translate-x-[2.5px] Apply on <li> -->
+      <aside class="h-full bg-[#fff/[.05] py7 rounded-l">
+        <ul
+          class="h-[300px] flex flex-col gap-7 border-r-[2.5px] border-white/15 py-7"
+        >
+          <li
+            class="text-right translate-x-[2.5px] min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="#about">Overview</a>
+          </li>
+          <li
+            class="text-right translate-x-[2.5px] min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="#features">Predictors</a>
+          </li>
+          <li
+            class="text-right translate-x-[2.5px] min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="#predict">Predict Churn</a>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="h-full text-[17px]">
+        <!-- About Model -->
+        <div
+          class="max-h-[60%] flex flex-col gap-7 overflow-scrollbar leading-8"
+          id="about"
+        >
+          <h1 class="text-4xl text-white/90">Overview</h1>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Project Goal</h5>
+            <p>
+              This project leverages machine learning to predict which customers
+              are likely to churn, allowing businesses to take proactive
+              measures to reduce attrition.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Business Context</h5>
+            <p>
+              Currently, the telecom industry faces significant challenges with
+              customer retention which is mostly due to fierce competition and
+              the rise of alternatives.
+            </p>
+            <p>
+              Acquiring new customers is costly for telecom companies due to
+              expenses in advertising, marketing, and infrastructure. Given
+              these high costs, companies prioritize customer retention to
+              ensure long-term value and maximize return on investment (ROI).
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Solution Impact</h5>
+            <p>
+              Predicting which customer will churn in the future allows telecom
+              companies offer targeted & personalized incentives or address
+              issues/dissatisfactions before they lead to churn.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Model Explanation</h5>
+            <p>
+              For this project, I implemented a Random Forest model, an ensemble
+              learning technique that combines multiple decision trees to
+              improve accuracy and reduce overfitting. Random Forest is ideal
+              for this churn prediction task due to its ability to handle a mix
+              of categorical and numerical data, while providing feature
+              importance insights for interpretability.
+            </p>
+            <p>
+              The training dataset exhibited primarily non-linear patterns,
+              which Logistic Regression (a linear model) struggles with, while
+              Random Forest can naturally handle both linear and non-linear
+              relationships.
+            </p>
+          </div>
+
+          <a href="#predict" class="self-start cmp-btn cmp-btn-pry cmp-btn-sm">
+            See feature importances
+          </a>
+        </div>
+
+        <!-- Prediction -->
+        <form
+          action=""
+          class="h-full max-h-full flex flex-col gap-3"
+          id="predict"
+          novalidate
+        >
+          <h2 class="text-3xl text-white/90">Predict</h2>
+          <div
+            id="inputs-container"
+            class="h-full basis-[60%] grid grid-cols-responsive overflow-scrollbar items-start gap-8 py-7"
+          >
+            <!-- Form fields here -->
+          </div>
+
+          <button
+            type="submit"
+            class="self-start cmp-btn cmp-btn-pry cmp-btn-long"
+          >
+            Predict
+          </button>
+        </form>
+
+        <!-- Model Features -->
+        <div
+          class="max-h-full overflow-scrollbar flex flex-col gap-7 leading-8"
+          id="features"
+        >
+          <h2 class="text-3xl text-white/90">Predictors</h2>
+          <div class="" id="feature_importance_chart"></div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html> -->
