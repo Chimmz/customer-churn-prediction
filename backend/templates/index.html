@@ -8,9 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
+
     <title>Customer Churn Prediction</title>
 
     <script
@@ -44,8 +45,12 @@
       };
     </script>
   </head>
+  <!-- Your best customers will buy from you again and again — and you don't need to spend more money to attract them -->
 
   <style type="text/tailwindcss">
+    html {
+      /* font-size: 62.5%; */
+    }
     .apexcharts-toolbar {
       display: none;
     }
@@ -56,7 +61,7 @@
       font: inherit;
     }
     ::selection {
-      @apply bg-pry;
+      @apply bg-pry text-black;
     }
     input[type='checkbox']:active + label,
     label:has(+ select:focus) {
@@ -74,7 +79,7 @@
 
     @layer utilities {
       .u-navlink-active {
-        @apply text-pry font-[500] border-r border-r-[3px] border-r-pry;
+        @apply text-pry font-bold border-r border-r-[3px] border-r-pry;
       }
       .u-flex-center {
         @apply flex items-center justify-center;
@@ -128,14 +133,13 @@
   </style>
 
   <body
-    class="grid min-h-screen max-h-screen bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/65 overflow-hidden"
+    class="grid min-h-screen max-h-screen font-nunito bg-black relative before:absolute before:inset-0 before:z-[2] before:bg-[#000]/65 overflow-hidden"
   >
     <video
       src="{{ url_for('static', filename='/media/vid.mp4' )}}"
       class="block absolute inset-0 h-screen w-screen object-cover"
       preload
       loop
-      autoplay
       muted
     ></video>
     <!-- autoplay -->
@@ -149,44 +153,85 @@
         </h1>
       </header>
 
-      <aside class="h-full borde">
+      <aside class="h-full">
         <ul
           class="h-[50%] flex flex-col gap-7 border-r-[2.5px] border-white/15 py-7"
         >
           <li
             class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200"
           >
-            <a href="#about">About</a>
-          </li>
-          <li
-            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
-          >
-            <a href="#predict">Predict Churn</a>
+            <a href="#about">Overview</a>
           </li>
           <li
             class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
           >
             <a href="#features">Predictors</a>
           </li>
+          <li
+            class="translate-x-[2.5px] text-right min-w-max pr-5 py-1 transition-colors duration-200 hover:text-white"
+          >
+            <a href="#predict">Predict Churn</a>
+          </li>
         </ul>
       </aside>
 
-      <main class="h-full">
+      <main class="h-full text-[17px]">
         <!-- About Model -->
-        <div class="h-full max-h-full flex flex-col gap-7 leading-8" id="about">
-          <h1 class="text-4xl text-white/90">About Model</h1>
+        <div
+          class="max-h-[85%] flex flex-col gap-7 overflow-scrollbar leading-8"
+          id="about"
+        >
+          <h1 class="text-4xl text-white/90">Overview</h1>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Project Goal</h5>
+            <p>
+              This project leverages machine learning to predict which customers
+              are likely to churn, allowing businesses to take proactive
+              measures to reduce attrition.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Business Context</h5>
+            <p>
+              Currently, the telecom industry faces significant challenges with
+              customer retention which is mostly due to fierce competition and
+              the rise of alternatives.
+            </p>
+            <p>
+              Acquiring new customers is costly for telecom companies due to
+              expenses in advertising, marketing, and infrastructure. Given
+              these high costs, companies prioritize customer retention to
+              ensure long-term value and maximize return on investment (ROI).
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Solution Impact</h5>
+            <p>
+              Predicting which customer will churn in the future allows telecom
+              companies offer targeted & personalized incentives or address
+              issues/dissatisfactions before they lead to churn.
+            </p>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <h5 class="uppercase text-[15px] text-pry">Model Explanation</h5>
+            <p>
+              Predicting which customer will churn in the future allows telecom
+              companies offer targeted & personalized incentives or address
+              issues/dissatisfactions before they lead to churn.
+            </p>
+          </div>
+
           <p>
             Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut
             bibendum. Placerat euismod blandit sed sed ut. Varius auctor
             scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
             a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
           </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur. Adipiscing a enim ut
-            bibendum. Placerat euismod blandit sed sed ut. Varius auctor
-            scelerisque sem neque sagittis imperdiet urna habitant sagittis. Sed
-            a facilisis tincidunt fringilla eu iaculis lectus posuere metus.
-          </p>
+
           <a href="#predict" class="self-start cmp-btn cmp-btn-pry"
             >Test model</a
           >

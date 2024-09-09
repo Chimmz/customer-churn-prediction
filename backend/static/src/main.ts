@@ -17,7 +17,6 @@ const handleLinkChange = () => {
       listItem.classList.add('u-navlink-active');
       listItem.classList.remove('hover:text-white');
     } else {
-      listItem.classList.remove('u-navlink-active');
       listItem.classList.add('hover:text-white');
     }
   });

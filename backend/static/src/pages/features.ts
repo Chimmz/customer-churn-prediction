@@ -9,7 +9,7 @@ export const loadFeatureImportances = async function () {
 
     switch (data.status) {
       case 'success':
-        plotBars(data.feature_importances);
+        plotBarChart(data.feature_importances);
         break;
       case 'error':
         window.alert(data.msg);
@@ -17,11 +17,10 @@ export const loadFeatureImportances = async function () {
     }
   } catch (err) {
     window.alert((err as Error).message);
-  } finally {
   }
 };
 
-const plotBars = (importances: { [k: string]: number }) => {
+const plotBarChart = (importances: { [k: string]: number }) => {
   const barData: Array<{ x: string; y: number }> = [];
 
   // Populate bar data
@@ -104,9 +103,7 @@ const plotBars = (importances: { [k: string]: number }) => {
         fontWeight: 'bold',
         colors: barData.map(() => '#000')
       },
-      background: {
-        enabled: false
-      },
+      background: { enabled: false },
       dropShadow: {
         enabled: false,
         top: 1,
@@ -119,31 +116,16 @@ const plotBars = (importances: { [k: string]: number }) => {
     tooltip: {
       enabled: true,
       followCursor: true,
-      inverseOrder: false,
-      custom: undefined,
-      hideEmptySeries: true,
       fillSeriesColor: true,
-      theme: false,
       style: {
         fontSize: '14px',
-        color: 'black',
+        color: '#000',
         fontFamily: 'Nunito',
         backgroundColor: '#000'
       },
-      x: {
-        show: true,
-        format: 'dd MMM',
-        formatter: undefined
-      },
-      y: {
-        formatter: undefined,
-        title: {
-          formatter: (seriesName: string) => 'Importance:'
-        }
-      },
-      marker: {
-        show: true
-      }
+      x: { show: true, formatter: undefined },
+      y: { formatter: undefined, title: 'Importance:' },
+      marker: { show: true }
     }
   };
 
@@ -160,9 +142,3 @@ window.addEventListener('hashchange', () => {
   const chartLoadedBefore = !!document.querySelector('.apexcharts-canvas');
   if (!chartLoadedBefore) loadFeatureImportances();
 });
-
-// window.onload = () => {
-//   alert();
-//   if (window.location.hash.replace('#', '') === 'features')
-//     loadFeatureImportances();
-// };

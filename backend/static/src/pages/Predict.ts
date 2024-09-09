@@ -61,8 +61,8 @@ const customInputInstance = TextInput({
 });
 const numericsUI = NUMERIC_FEATURES.map(([feature, label]) => {
   return customInputInstance.create({
-    type: 'number',
     id: feature,
+    type: 'number',
     name: feature,
     min: 0,
     step: feature === 'tenure' ? 1 : 0.5,
@@ -90,7 +90,7 @@ const selectionsUI = SELECTION_INPUTS.map(([feature, label, optns]) => {
   });
 });
 
-const inputComps = [...numericsUI, ...checkboxesUI, ...selectionsUI];
+const inputsUI = [...numericsUI, ...checkboxesUI, ...selectionsUI];
 
 const getHtmlInputValue = (input: HTMLInputElement) => {
   return input.type === 'checkbox' ? +input.checked : +input.value;
@@ -108,7 +108,9 @@ const predict = async function (this: HTMLFormElement) {
       body: JSON.stringify(obj),
       headers: { 'Content-Type': 'application/json' }
     });
+
     const data = await res.json();
+    btnSubmit.textContent = 'Predict';
 
     switch (data.status) {
       case 'success':
@@ -121,19 +123,17 @@ const predict = async function (this: HTMLFormElement) {
     }
   } catch (err) {
     window.alert((err as Error).message);
-  } finally {
-    btnSubmit.textContent = 'Predict';
   }
 };
 
 const init = () => {
+  shuffleArray(inputsUI).forEach(cmp => cmp.render());
+
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
     btnSubmit.textContent = 'Predicting...';
     predict.call(this);
   });
-
-  shuffleArray(inputComps).forEach(cmp => cmp.render());
 };
 
 init();
