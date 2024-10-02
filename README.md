@@ -1,10 +1,12 @@
-**CUSTOMER CHURN PREDICTION FOR TELECOMMUNICATIONS COMPANY**
+**CUSTOMER CHURN PREDICTION FOR A TELECOMMUNICATIONS COMPANY**
 
 This project predicts customer churn using a machine learning model built on the Telco dataset. The solution is deployed end-to-end, featuring a frontend built with JavaScript and TypeScript, a Flask-based backend API, and is hosted on AWS.
+
 
 **Project Overview**
 
 Customer churn is a key business issue for telecommunications companies, impacting revenue and growth. This project aims to identify customers likely to churn using historical data, enabling timely interventions to retain them.
+
 
 **Key Features**:
 
@@ -16,26 +18,23 @@ Real-time API: Flask API for handling predictions.
 
 Deployment: Hosted on AWS for scalability and accessibility.
 
-Technologies Used
+
+
+**Technologies Used**
 
 Frontend:
-
-JavaScript/TypeScript: Used for building a responsive and interactive UI.
-
-HTML/CSS/TailwindCSS: For static page structure and styling.
-
+   - JavaScript/TypeScript: Used for building a responsive and interactive UI.
+   - HTML/CSS/TailwindCSS: For static page structure and styling.
 
 Backend
-
-Flask: Python framework for building RESTful API endpoints to handle prediction requests.
-
-AWS: Cloud platform for deployment and hosting.
+   - Flask: Python framework for building RESTful API endpoints to handle prediction requests.
+   - AWS: Cloud platform for deployment and hosting.
 
 
 Machine Learning
+   - Random Forest Classifier: Model used for churn prediction.
+   - Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model building.
 
-Random Forest Classifier: Model used for churn prediction.
-Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model building.
 
 **Project Structure**:
 
@@ -62,10 +61,12 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
    - tsc --watch
 
 
+
 **Usage**
 - Access the application via the browser after deployment.
 - Use the Predict page to input customer details and predict churn likelihood.
 - View feature importances and model metrics on the Predictors page.
+
   
 **Model Performance**
 - Accuracy:  85%
@@ -73,7 +74,7 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
 - Recall:  87%
 - Precision:  83%
 
-**Future Improvements**
 
-Incorporate more advanced models like XGBoost or Neural Networks.
-Add real-time analytics and enhance scalability with AWS Lambda.
+**Future Improvements**
+   - Incorporate more advanced models like XGBoost or Neural Networks.
+   - Add real-time analytics and enhance scalability with AWS Lambda.
