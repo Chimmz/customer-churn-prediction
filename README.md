@@ -20,12 +20,16 @@ Technologies Used
 
 Frontend:
 JavaScript/TypeScript: Used for building a responsive and interactive UI.
+
 HTML/CSS/TailwindCSS: For static page structure and styling.
 
 Backend
 Flask: Python framework for building RESTful API endpoints to handle prediction requests.
+
 AWS: Cloud platform for deployment and hosting.
-Machine Learning:
+
+Machine Learning
+
 Random Forest Classifier: Model used for churn prediction.
 Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model building.
 
@@ -40,6 +44,7 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
   git clone https://github.com/Chimmz/customer-churn-prediction
   cd customer-churn-prediction
 2. Install backend dependencies:
+   
    cd backend
    
    pip install -r requirements.txt
@@ -49,7 +54,7 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
    
 6. Run all TypeScript files via the command line:
   cd backend/static/src
-  
+
   tsc --watch
 
 **Usage**
@@ -59,11 +64,15 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
   
 **Model Performance**
 Accuracy:  85%
+
 F1 score:  85%
+
 Recall:  87%
+
 Precision:  83%
 
 **Future Improvements**
+
 Incorporate more advanced models like XGBoost or Neural Networks.
 Add real-time analytics and enhance scalability with AWS Lambda.
 
