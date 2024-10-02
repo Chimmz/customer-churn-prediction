@@ -34,12 +34,17 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
   git clone https://github.com/Chimmz/customer-churn-prediction
   cd customer-churn-prediction
 2. Install backend dependencies:
+   
   cd backend
+
   pip install -r requirements.txt
-3. Run the Flask API:
+  
+4. Run the Flask API:
   python server.py
-4. Run all TypeScript files via the command line:
+5. Run all TypeScript files via the command line:
+
   cd backend/static/src
+  
   tsc --watch
 
 **Usage**
@@ -48,18 +53,12 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
 - View feature importances and model metrics on the Predictors page.
   
 **Model Performance**
-Accuracy: 83%
-F1-Score: 90%
-Precision: 89%
+Accuracy:  85%
+F1 score:  85%
+Recall:  87%
+Precision:  83%
 
 **Future Improvements**
 Incorporate more advanced models like XGBoost or Neural Networks.
 Add real-time analytics and enhance scalability with AWS Lambda.
-  
-
-
-
-
-
-
 
