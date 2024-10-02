@@ -9,14 +9,20 @@ Customer churn is a key business issue for telecommunications companies, impacti
 **Key Features**:
 
 Predict customer churn: Uses Random Forest model to predict if a customer is likely to leave.
+
 Interactive UI: A user-friendly web interface for making predictions and visualizing model performance.
+
 Real-time API: Flask API for handling predictions.
+
 Deployment: Hosted on AWS for scalability and accessibility.
+
 Technologies Used
+
 Frontend:
 JavaScript/TypeScript: Used for building a responsive and interactive UI.
 HTML/CSS/TailwindCSS: For static page structure and styling.
-Backend:
+
+Backend
 Flask: Python framework for building RESTful API endpoints to handle prediction requests.
 AWS: Cloud platform for deployment and hosting.
 Machine Learning:
@@ -34,15 +40,14 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
   git clone https://github.com/Chimmz/customer-churn-prediction
   cd customer-churn-prediction
 2. Install backend dependencies:
+   cd backend
    
-  cd backend
-
-  pip install -r requirements.txt
+   pip install -r requirements.txt
   
 4. Run the Flask API:
-  python server.py
-5. Run all TypeScript files via the command line:
-
+   python server.py
+   
+6. Run all TypeScript files via the command line:
   cd backend/static/src
   
   tsc --watch
