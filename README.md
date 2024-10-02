@@ -22,48 +22,7 @@ Scikit-Learn, Pandas, NumPy: Python libraries for data manipulation and model bu
 
 **Project Structure**:
 
-├── backend/
-
-│   ├── server.py                  # Flask API for predictions
-
-│   ├── forest_final_churn.pkl     # Pre-trained Random Forest model
-
-│   ├── requirements.txt           # Python dependencies
-
-│   ├── static/
-
-│   │   ├── src/
-
-│   │   │   ├── main.ts            # Entry point for TypeScript frontend logic
-
-│   │   │   ├── components/        # TypeScript components (e.g., forms, buttons)
-
-│   │   │   ├── dist/              # Transpiled JavaScript files
-
-│   │   │   ├── pages/             # Page templates (e.g., home, predict)
-
-│   ├── templates/
-
-│   │   ├── index.html             # HTML template for the application
-
-│
-
-├── aws_deployment/
-
-│   ├── deploy.sh                  # Deployment script for AWS EC2
-
-│   ├── instance_config.yml        # EC2 instance configuration
-
-│
-
-├── datasets/
-
-│   ├── WA_Fn-UseC_-Telco-Customer-Churn.csv          # Dataset used for training the model
-
-|
-
-└── README.md                    # Project documentation
-
+![proj-structure](https://github.com/user-attachments/assets/ea9ffe59-56fc-4b99-aaad-58e179cf5d90)
 
 
 **Setup and Installation**
