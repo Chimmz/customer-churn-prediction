@@ -1,10 +1,13 @@
 **CUSTOMER CHURN PREDICTION FOR TELECOMMUNICATIONS COMPANY**
+
 This project predicts customer churn using a machine learning model built on the Telco dataset. The solution is deployed end-to-end, featuring a frontend built with JavaScript and TypeScript, a Flask-based backend API, and is hosted on AWS.
 
 **Project Overview**
+
 Customer churn is a key business issue for telecommunications companies, impacting revenue and growth. This project aims to identify customers likely to churn using historical data, enabling timely interventions to retain them.
 
 **Key Features**:
+
 Predict customer churn: Uses Random Forest model to predict if a customer is likely to leave.
 Interactive UI: A user-friendly web interface for making predictions and visualizing model performance.
 Real-time API: Flask API for handling predictions.
